@@ -11,4 +11,5 @@ public class Producto {
     private Long id;
     private String nombre;
     private Integer cantidadStock;
+    private Long sucursalId;
 }

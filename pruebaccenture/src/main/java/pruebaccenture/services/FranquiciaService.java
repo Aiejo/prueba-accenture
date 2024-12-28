@@ -12,6 +12,6 @@ public interface FranquiciaService  {
     Mono<Franquicia> save(Franquicia franquicia);
     Mono<Boolean> existsById(Long id);
     Mono<Void> deleteById(Long id);
-    Mono<Franquicia> actualizarNombre(Long id, ActualizarDTO nuevaFranquicia);
+    Mono<Franquicia> actualizar(Long id, ActualizarDTO nuevaFranquicia);
     Flux<ProductoConSucursalDTO> obtenerProductosConMasStock(Long idFranquicia);
 }

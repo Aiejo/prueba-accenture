@@ -13,7 +13,4 @@ public class Franquicia {
     @Id
     private Long id;
     private String nombre;
-
-    @MappedCollection(idColumn = "franquicia_id")
-    private List<Sucursal> sucursales;
 }

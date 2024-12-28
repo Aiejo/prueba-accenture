@@ -1,27 +1,22 @@
 package pruebaccenture.modelDTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ProductoConSucursalDTO {
     private Long id;
     private String nombre;
     private int cantidadStock;
     private SucursalDTO sucursal;
-    public ProductoConSucursalDTO(Long id, String nombre, int cantidadStock, SucursalDTO sucursal) {
-        this.id = id;
-        this.nombre = nombre;
-        this.cantidadStock = cantidadStock;
-        this.sucursal = sucursal;
-    }
+
     @Data
+    @AllArgsConstructor
     public static class SucursalDTO {
         private Long id;
         private String nombre;
-        public SucursalDTO(Long id, String nombre) {
-            this.id = id;
-            this.nombre = nombre;
-        }
+
     }
 }
 
