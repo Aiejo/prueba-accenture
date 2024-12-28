@@ -1,20 +1,10 @@
-FROM gradle:7.6.0-jdk17 AS build
-
+FROM gradle:latest AS builder
 WORKDIR /app
-
 COPY build.gradle settings.gradle /app/
 COPY src /app/src
-
 RUN gradle build --no-daemon -x test
 
 FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-COPY --from=build /app/build/libs/*.jar app.jar
-
-COPY .env /app/.env
-
+COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
