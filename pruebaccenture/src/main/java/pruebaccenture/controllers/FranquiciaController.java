@@ -1,58 +1,41 @@
 package pruebaccenture.controllers;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pruebaccenture.modelDTO.ActualizarDTO;
-import pruebaccenture.modelDTO.AgregarProductoDTO;
-import pruebaccenture.modelDTO.AgregarSucursalDTO;
-import pruebaccenture.modelDTO.ProductoConSucursalDTO;
-import pruebaccenture.modelEntity.Franquicia;
-import pruebaccenture.modelEntity.Producto;
-import pruebaccenture.modelEntity.Sucursal;
-import pruebaccenture.servicesInterfaces.IFranquiciaService;
-import pruebaccenture.servicesInterfaces.IProductoService;
-import pruebaccenture.servicesInterfaces.ISucursalService;
+import org.springframework.web.server.ResponseStatusException;
+import pruebaccenture.model.Franquicia;
+import pruebaccenture.services.FranquiciaService;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/franquicia")
 public class FranquiciaController {
 
-    @Autowired
-    private IFranquiciaService franquiciaService;
+    private final FranquiciaService franquiciaService;
 
-    @GetMapping("/")
-    public ResponseEntity<?> obtenerFranquicias() {
-        try {
-            List<Franquicia> franquicias = franquiciaService.findAll();
-            return ResponseEntity.status(200).body(franquicias);
-        } catch (Exception e) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Error al obtener franquicias: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
+
+    private Flux<Map<String, String>> buildErrorResponse(Exception e) {
+        Map<String, String> errorResponse = Map.of("message", e.getMessage());
+        return Flux.just(errorResponse);
+    }
+    
+    @GetMapping
+    public Flux<Franquicia> obtenerFranquicias() {
+        return franquiciaService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerFranquiciaPorId(@PathVariable Long id) {
-        Map<String, String> response = new HashMap<>();
-        try {
-            Franquicia franquicia = franquiciaService.findById(id);
-            if(franquicia==null){
-                response.put("message", "Franquicia no encontrada.");
-                return ResponseEntity.status(404).body(response);
-            }
-            return ResponseEntity.status(200).body(franquicia);
-        } catch (Exception e) {
-            response.put("message", "Error al obtener franquicias: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
-
+    public Mono<Franquicia> obtenerFranquiciaPorId(@PathVariable Long id) {
+        return franquiciaService.findById(id)
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Franquicia no encontrada")));
     }
 
     @PostMapping("/")
@@ -81,16 +64,6 @@ public class FranquiciaController {
             return ResponseEntity.status(500).body(response);
         }
     }
-
-    @GetMapping("/{id}/max-stock-sucursal")
-    public ResponseEntity<?> obtenerProductosConMasStock(@PathVariable Long id) {
-        Map<String, String> response = new HashMap<>();
-        try {
-            List<ProductoConSucursalDTO> productosConMayorStock = franquiciaService.obtenerProductosConMasStock(id);
-            return ResponseEntity.ok(productosConMayorStock);
-        } catch (Exception e) {
-            response.put("message", "Error al obtener productos con mayor stock: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
-    }
 }
+
+

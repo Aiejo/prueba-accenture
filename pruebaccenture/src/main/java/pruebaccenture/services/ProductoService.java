@@ -1,33 +1,31 @@
 package pruebaccenture.services;
 
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pruebaccenture.modelDTO.ActualizarDTO;
-import pruebaccenture.modelDTO.AgregarProductoDTO;
-import pruebaccenture.modelDTO.AgregarSucursalDTO;
-import pruebaccenture.modelEntity.Franquicia;
-import pruebaccenture.modelEntity.Producto;
-import pruebaccenture.modelEntity.Sucursal;
-import pruebaccenture.repositoriesInterfaces.IProductoRepository;
-import pruebaccenture.repositoriesInterfaces.ISucursalRepository;
-import pruebaccenture.servicesInterfaces.IProductoService;
-import pruebaccenture.servicesInterfaces.ISucursalService;
-
-import java.util.List;
+import pruebaccenture.model.Producto;
+import pruebaccenture.repositories.ProductoRepository;
+import reactor.core.publisher.Flux;
 
 @Service
-public class ProductoService implements IProductoService {
+public class ProductoService {
 
-    @Autowired
-    private ISucursalRepository sucursalRepository;
+    private final ProductoRepository productoRepository;
 
-    @Autowired
-    private IProductoRepository productoRepository;
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
 
-    @Override
-    public List<Producto> findAll() {
+    public Flux<Producto> getAllProductos() {
         return productoRepository.findAll();
+    }
+
+/*
+    public Flux<Producto> findAll(){
+        try {
+            return productoRepository.findAll();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Flux.error(new RuntimeException("Error al obtener productos."));
+        }
     }
 
     @Override
@@ -72,7 +70,7 @@ public class ProductoService implements IProductoService {
         return productoRepository.save(producto);
     }
 
-
+*/
 
 }
 

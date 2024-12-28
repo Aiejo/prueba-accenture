@@ -1,0 +1,99 @@
+package pruebaccenture.services.impl;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import pruebaccenture.model.Franquicia;
+import pruebaccenture.repositories.FranquiciaRepository;
+import pruebaccenture.services.FranquiciaService;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@RequiredArgsConstructor
+@Service
+public class FranquiciaServiceImpl implements FranquiciaService {
+
+    private final FranquiciaRepository franquiciaRepository;
+
+    @Override
+    public Flux<Franquicia> findAll(){
+        return franquiciaRepository.findAll();
+    }
+
+    @Override
+    public Mono<Franquicia> findById(Long id){
+        return franquiciaRepository.findById(id);
+    }
+
+    @Override
+    public Mono<Boolean> existsById(Long id) {
+        return franquiciaRepository.existsById(id);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+       return franquiciaRepository.deleteById(id);
+    }
+
+
+
+/*
+
+    @Override
+    public Mono<Franquicia> save(Franquicia franquicia){
+        return franquiciaRepository.save(franquicia);
+    }
+
+    @Override
+    public Mono<Franquicia> findById(Long id){
+        return franquiciaRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Mono<Boolean> existsById(Long id) {
+        return franquiciaRepository.existsById(id);
+    }
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        franquiciaRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<Franquicia> actualizarNombre(Long id, ActualizarDTO nuevaFranquicia) {
+        Franquicia franquicia = franquiciaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Franquicia no encontrada."));
+        if(nuevaFranquicia.getNuevoNombre() != null){
+            franquicia.setNombre(nuevaFranquicia.getNuevoNombre());
+        }
+        return franquiciaRepository.save(franquicia);
+    }
+
+    @Override
+    public Flux<ProductoConSucursalDTO> obtenerProductosConMasStock(Long idFranquicia){
+        Franquicia franquicia = franquiciaRepository.findById(idFranquicia)
+                .orElseThrow(() -> new RuntimeException("Franquicia no encontrada."));
+
+        Flux<ProductoConSucursalDTO> productosConMayorStock = new ArrayList<>();
+        for (Sucursal sucursal : franquicia.getSucursales()) {
+            // Obtener producto con mayor stock
+            Producto mayorStock = sucursal.getProductos().stream()
+                    .max(Comparator.comparingInt(Producto::getCantidadStock))
+                    .orElse(null);
+            // Agregar al resultado objeto que incluya la información de la sucursal
+            if (mayorStock != null) {
+                ProductoConSucursalDTO.SucursalDTO sucursalDTO = new ProductoConSucursalDTO.SucursalDTO(
+                        sucursal.getId(),
+                        sucursal.getNombre()
+                );
+                ProductoConSucursalDTO dto = new ProductoConSucursalDTO(
+                        mayorStock.getId(),
+                        mayorStock.getNombre(),
+                        mayorStock.getCantidadStock(),
+                        sucursalDTO
+                );
+                productosConMayorStock.add(dto);
+            }
+        }
+        return productosConMayorStock;
+    }
+    */
+}

@@ -3,10 +3,10 @@ package pruebaccenture;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @SpringBootApplication
 public class PruebaccentureApplication {
-
 	public static void main(String[] args) {
 		Dotenv dotenv = Dotenv.load();
 		System.setProperty("DB_CONNECTION_URL", dotenv.get("DB_CONNECTION_URL"));

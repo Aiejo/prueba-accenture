@@ -1,33 +1,31 @@
 package pruebaccenture.services;
 
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pruebaccenture.modelDTO.ActualizarDTO;
-import pruebaccenture.modelDTO.AgregarSucursalDTO;
-import pruebaccenture.modelEntity.Franquicia;
-import pruebaccenture.modelEntity.Producto;
-import pruebaccenture.modelEntity.Sucursal;
-import pruebaccenture.repositoriesInterfaces.IFranquiciaRepository;
-import pruebaccenture.repositoriesInterfaces.ISucursalRepository;
-import pruebaccenture.servicesInterfaces.ISucursalService;
-
-import java.util.List;
+import pruebaccenture.model.Sucursal;
+import pruebaccenture.repositories.SucursalRepository;
+import reactor.core.publisher.Flux;
 
 @Service
-public class SucursalService implements ISucursalService {
+public class SucursalService  {
 
-    @Autowired
-    private IFranquiciaRepository franquiciaRepository;
+    private final SucursalRepository sucursalRepository;
 
-    @Autowired
-    private ISucursalRepository sucursalRepository;
-
-    @Override
-    public List<Sucursal> findAll(){
-        return sucursalRepository.findAll();
+    public SucursalService(SucursalRepository sucursalRepository) {
+        this.sucursalRepository = sucursalRepository;
     }
 
+    public Flux<Sucursal> getAllSucursales() {
+        return sucursalRepository.findAll();
+    }
+    /*
+    public Flux<Sucursal> findAll(){
+        try {
+            return sucursalRepository.findAll();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Flux.error(new RuntimeException("Error al obtener sucursales."));
+        }
+    }
     @Override
     public Sucursal save(Sucursal sucursal){
 
@@ -68,4 +66,5 @@ public class SucursalService implements ISucursalService {
         }
         return sucursalRepository.save(sucursal);
     }
+     */
 }

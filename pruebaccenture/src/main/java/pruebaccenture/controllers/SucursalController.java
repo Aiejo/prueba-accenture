@@ -1,21 +1,24 @@
 package pruebaccenture.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pruebaccenture.modelDTO.ActualizarDTO;
-import pruebaccenture.modelDTO.AgregarSucursalDTO;
-import pruebaccenture.modelEntity.Sucursal;
-import pruebaccenture.servicesInterfaces.ISucursalService;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import pruebaccenture.model.Sucursal;
+import pruebaccenture.services.SucursalService;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/sucursal")
 public class SucursalController {
+    private final SucursalService sucursalService;
 
+    public SucursalController(SucursalService sucursalService) {
+        this.sucursalService = sucursalService;
+    }
+
+    @GetMapping("/")
+    public Flux<Sucursal> getAllSucursales() {
+        return sucursalService.getAllSucursales();
+    }
+/*
     @Autowired
     private ISucursalService sucursalService;
 
@@ -72,4 +75,5 @@ public class SucursalController {
             return ResponseEntity.status(500).body(response);
         }
     }
+     */
 }

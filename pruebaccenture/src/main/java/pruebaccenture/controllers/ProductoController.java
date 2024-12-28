@@ -1,22 +1,24 @@
 package pruebaccenture.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pruebaccenture.modelDTO.ActualizarDTO;
-import pruebaccenture.modelDTO.AgregarProductoDTO;
-import pruebaccenture.modelEntity.Producto;
-import pruebaccenture.servicesInterfaces.IProductoService;
-
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import pruebaccenture.model.Producto;
+import pruebaccenture.services.ProductoService;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/producto")
 public class ProductoController {
+    private final ProductoService productoService;
 
+    public ProductoController(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    @GetMapping("/")
+    public Flux<Producto> getAllProductos() {
+        return productoService.getAllProductos();
+    }
+/*
     @Autowired
     private IProductoService productoService;
 
@@ -94,4 +96,6 @@ public class ProductoController {
             return ResponseEntity.status(500).body(response);
         }
     }
+
+     */
 }
