@@ -93,9 +93,4 @@ public class FranquiciaController {
             return ResponseEntity.status(500).body(response);
         }
     }
-
-
-
-
-
 }
