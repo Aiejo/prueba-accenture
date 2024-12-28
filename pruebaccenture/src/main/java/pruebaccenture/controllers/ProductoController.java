@@ -57,25 +57,22 @@ public class ProductoController {
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Sucursal no encontrada")));
     }
 
-/*
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
-        Map<String,String> response = new HashMap<>();
-        try {
-            if (productoService.existsById(id)) {
-                productoService.deleteById(id);
-                response.put("message", "Producto borrado exitosamente.");
-                return ResponseEntity.status(201).body(response);
-            } else {
-                response.put("message", "Producto no encontrado.");
-                return ResponseEntity.status(404).body(response);
-            }
-        } catch (Exception e) {
-            response.put("message", "Error al borrar producto: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
+    public Mono<ResponseEntity<Map<String, String>>> eliminarProducto(@PathVariable Long id) {
+        Map<String, String> response = new HashMap<>();
+        return productoService.existsById(id)
+                .flatMap(exists -> {
+                    if (exists) {
+                        return productoService.deleteById(id)
+                                .then(Mono.just(ResponseEntity.status(201).body(Map.of("message", "Producto borrado exitosamente."))));
+                    } else {
+                        return Mono.just(ResponseEntity.status(404).body(Map.of("message", "Producto no encontrado.")));
+                    }
+                })
+                .onErrorResume(e -> {
+                    response.put("message", "Error al borrar producto: " + e.getMessage());
+                    return Mono.just(ResponseEntity.status(500).body(response));
+                });
     }
 
-     */
 }

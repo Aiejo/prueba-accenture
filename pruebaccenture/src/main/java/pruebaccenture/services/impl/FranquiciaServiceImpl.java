@@ -83,34 +83,4 @@ public class FranquiciaServiceImpl implements FranquiciaService {
                         })
                 );
     }
-    /*
-    @Override
-    public Flux<ProductoConSucursalDTO> obtenerProductosConMasStock(Long idFranquicia){
-        Franquicia franquicia = franquiciaRepository.findById(idFranquicia)
-                .orElseThrow(() -> new RuntimeException("Franquicia no encontrada."));
-
-        Flux<ProductoConSucursalDTO> productosConMayorStock = new ArrayList<>();
-        for (Sucursal sucursal : franquicia.getSucursales()) {
-            // Obtener producto con mayor stock
-            Producto mayorStock = sucursal.getProductos().stream()
-                    .max(Comparator.comparingInt(Producto::getCantidadStock))
-                    .orElse(null);
-            // Agregar al resultado objeto que incluya la información de la sucursal
-            if (mayorStock != null) {
-                ProductoConSucursalDTO.SucursalDTO sucursalDTO = new ProductoConSucursalDTO.SucursalDTO(
-                        sucursal.getId(),
-                        sucursal.getNombre()
-                );
-                ProductoConSucursalDTO dto = new ProductoConSucursalDTO(
-                        mayorStock.getId(),
-                        mayorStock.getNombre(),
-                        mayorStock.getCantidadStock(),
-                        sucursalDTO
-                );
-                productosConMayorStock.add(dto);
-            }
-        }
-        return productosConMayorStock;
-    }
-    */
 }

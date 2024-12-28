@@ -48,15 +48,17 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Mono<Producto> agregarProducto(AgregarProductoDTO nuevoProducto){
-        Mono<Boolean> sucursal = sucursalRepository.existsById(nuevoProducto.getIdSucursal());
-        if(sucursal.block() == false){
-            return Mono.error(new Exception("La sucursal no existe"));
-        }
-        Producto producto = new Producto();
-        producto.setNombre(nuevoProducto.getNombre());
-        producto.setCantidadStock(nuevoProducto.getCantidadStock());
-        producto.setSucursalId(nuevoProducto.getIdSucursal());
-        return productoRepository.save(producto);
+        return sucursalRepository.existsById(nuevoProducto.getIdSucursal())
+                .flatMap(exists -> {
+                    if (!exists) {
+                        return Mono.error(new Exception("La sucursal no existe."));
+                    }
+                    Producto producto = new Producto();
+                    producto.setNombre(nuevoProducto.getNombre());
+                    producto.setCantidadStock(nuevoProducto.getCantidadStock());
+                    producto.setSucursalId(nuevoProducto.getIdSucursal());
+                    return productoRepository.save(producto);
+                });
     }
 
     @Override

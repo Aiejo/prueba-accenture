@@ -1,10 +1,14 @@
 package pruebaccenture.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("producto")
+@Table("Producto")
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Producto {
     @Id
