@@ -33,7 +33,7 @@ Para ejecutar la aplicación en tu entorno local, sigue estos pasos:
 
 1. **Clonar repositorio**:
    
-   Esxoge el directorio de preferencia y ejecuta:
+   Escoge el directorio de preferencia y ejecuta:
    ```bash
    git clone https://github.com/Aiejo/prueba-accenture.git
    ```
@@ -60,12 +60,13 @@ Para ejecutar la aplicación en tu entorno local, sigue estos pasos:
    docker run --name contenedor-franquicia -p 8080:8080 prueba-accenture-image
    ```
 5. **Acceder a la aplicación:**:
-    La aplicación estará corriendo en http://localhost:8080. Puedes usar herramientas como Postman. con  
+    La aplicación estará corriendo en http://localhost:8080. Puedes usar herramientas como Postman. 
 
 ## Documentación de API
 
 La documentación de la API la encuentras en **Prueba Accenture.postman_collection.json**, ahi podrás probar todos los endpoint implementados.
 
-Pd: por cuestiones prácticas las variables de conexión a la base de datos están en el archivo .env. Esto se reconoce como una mala práctica.
+### Nota 
+Por cuestiones prácticas las variables de conexión a la base de datos están en el archivo .env. Esto se reconoce como una mala práctica.
 Para que amazon no tumbe la base de datos, es necesario que tu agregues en DB_PASSWORD (sin los espacios):
-contra  base  accenture
+**contra  base  accenture**
