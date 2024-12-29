@@ -1,5 +1,8 @@
 package pruebaccenture.modelDTO;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class AgregarProductoDTO {
     private long idSucursal;
     private String nombre;

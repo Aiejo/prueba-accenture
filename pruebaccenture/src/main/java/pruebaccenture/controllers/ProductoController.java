@@ -39,7 +39,7 @@ public class ProductoController {
         return productoService.agregarProducto(nuevoProducto)
                 .map(savedProducto -> {
                     Map<String, String> response = new HashMap<>();
-                    response.put("message", "Producto agregada exitosamente.");
+                    response.put("message", "Producto agregado exitosamente.");
                     return ResponseEntity.status(HttpStatus.CREATED).body(response);
                 })
                 .onErrorResume(e -> {
