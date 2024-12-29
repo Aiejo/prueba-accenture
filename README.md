@@ -15,7 +15,9 @@ La API permite realizar operaciones CRUD sobre los siguientes recursos:
 - **Sucursales**: Gestión de las sucursales de las franquicias.
 - **Productos**: Gestión de productos asociados a las franquicias.
 
-Asimismo la API cuenta con pruebas unitarias a los Controladores, servicioes y modelos realizadas con Mockito y JUnit.
+Asimismo la API cuenta con pruebas unitarias a los Controladores, servicios y modelos realizadas con Mockito y JUnit.
+
+El diseño de la base de datos se encuentra en **Entidad Relación Franquicias.jpg**
 
 ## Requisitos Previos
 
